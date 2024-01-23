@@ -109,6 +109,8 @@ RUN set -eux; \
 			https://dlcdn.apache.org/ \
 # if the version is outdated, we have to pull from the archive
 			https://archive.apache.org/dist/ \
+# if not found in archive, then it's a release candidate
+                        https://dist.apache.org/repos/dist/dev/ \
 		; do \
 			if wget --progress=dot:giga -O "$f" "$distUrl$distFile" && [ -s "$f" ]; then \
 				success=1; \
