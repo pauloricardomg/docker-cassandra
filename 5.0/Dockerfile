@@ -90,8 +90,8 @@ ENV GPG_KEYS \
 # Berenguer Blasi (Code Signing Key) <bereng@apache.org>
 	CEC5C50B9C629EF0F5AB2706650B72EB14CCD622
 
-ENV CASSANDRA_VERSION 5.0-beta1
-ENV CASSANDRA_SHA512 d67aa211858f090dca6ea2ac84ed405bd4791aaf493e3c8e5b24fd44e54aa3132eeca3f4e310d6d1aad1ca105515011d6e177d169a6e94af0a257ffc95b4f175
+ARG CASSANDRA_VERSION 5.0-beta1
+ARG CASSANDRA_SHA512 d67aa211858f090dca6ea2ac84ed405bd4791aaf493e3c8e5b24fd44e54aa3132eeca3f4e310d6d1aad1ca105515011d6e177d169a6e94af0a257ffc95b4f175
 
 RUN set -eux; \
 	savedAptMark="$(apt-mark showmanual)"; \
@@ -109,6 +109,8 @@ RUN set -eux; \
 			https://dlcdn.apache.org/ \
 # if the version is outdated, we have to pull from the archive
 			https://archive.apache.org/dist/ \
+# if not found in archive, then it's a release candidate
+                        https://dist.apache.org/repos/dist/dev/ \
 		; do \
 			if wget --progress=dot:giga -O "$f" "$distUrl$distFile" && [ -s "$f" ]; then \
 				success=1; \
